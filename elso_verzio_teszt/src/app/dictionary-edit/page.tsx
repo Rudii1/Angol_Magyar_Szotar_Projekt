@@ -1,4 +1,3 @@
-// src/app/dictionary-edit/page.tsx
 'use client';
 
 import React, { useState, useEffect } from "react";
@@ -52,9 +51,13 @@ const DictionaryEditPage = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-blue-600 p-8">
             <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl text-center">
                 <h1 className="text-4xl font-bold text-yellow-400 mb-8">Szótár Módosítás</h1>
-                <p className="text-white mb-6">Itt tudod szerkeszteni a szótárat!</p>
 
-                {/* Szótár táblázat */}
+
+                <p className="text-lg font-semibold text-yellow-300 mb-6 bg-gray-700 p-4 rounded-lg shadow-lg">
+                    Itt tudsz manuálisan saját magadnak egy szótárat létrehozni. Ha lementesz egy szópárt,  akkor egy másik menüpontban fogsz tudni saját magadnak egy játékot létrehozni.
+                </p>
+
+
                 <div className="overflow-x-auto">
                     <table className="min-w-full bg-white text-black rounded-lg shadow-lg border border-gray-300">
                         <thead>
@@ -80,7 +83,7 @@ const DictionaryEditPage = () => {
                     </table>
                 </div>
 
-                {/* Szó hozzáadása űrlap */}
+                {/* Itt adunk bátyám hozzá egy szót */}
                 <div className="mt-6">
                     <input
                         type="text"
@@ -104,7 +107,7 @@ const DictionaryEditPage = () => {
                     </button>
                 </div>
 
-                {/* Vissza a főoldalra gomb */}
+
                 <div className="flex justify-between mt-8">
                     <button
                         onClick={handleBackToHome}

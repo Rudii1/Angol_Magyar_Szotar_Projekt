@@ -110,6 +110,14 @@ const WordMatchingGame = () => {
 
             {!showWords ? (
                 <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl">
+                    <p className="text-2xl font-bold text-yellow-300 mb-4 text-center">
+                        Nah el érkeztünk a saját játék létrehozása menüponthoz.
+                        Itt ki tudod választani a saját szótárból hozzá adott szópárokból összeállított szavakból a játékot.
+                        <br />
+                        <span className="font-normal">
+                            Disclaimer: Csak annyi szóból tudsz játékot kreálni magadnak, ahány darab szópár van a szótárban.
+                        </span>
+                    </p>
                     <label className="text-white mb-2">Szópárok száma: {numberOfPairs}</label>
                     <input
                         type="range"
