@@ -139,7 +139,7 @@ const WordMatchingGame = () => {
                             Extra gomb
                         </button>
                         <button className="bg-white text-black font-semibold py-3 px-4 rounded-lg">
-                            Szótár
+                            Extra gomb
                         </button>
                         <select
                             onChange={handleDifficultyChange}
