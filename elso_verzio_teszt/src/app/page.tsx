@@ -1,3 +1,4 @@
+// src/app/page.tsx
 'use client';
 
 import React from "react";
@@ -33,23 +34,21 @@ const HomePage = () => {
             </button>
             <button
                 onClick={handleManualClick}
-                className="bg-white text-black font-semibold py-3 px-4 rounded-lg"
+                className="bg-white text-black font-semibold py-3 px-4 rounded-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-110"
             >
               Manuális játék
             </button>
             <button
                 onClick={handleDictionaryClick}
-                className="bg-white text-black font-semibold py-3 px-4 rounded-lg"
+                className="bg-white text-black font-semibold py-3 px-4 rounded-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-110"
             >
               Szótár
             </button>
-            <select className="bg-white text-black font-semibold py-3 px-4 rounded-lg">
-              <option value="very-easy">Nagyon könnyű</option>
-              <option value="easy">Könnyű</option>
-              <option value="normal">Normális</option>
-              <option value="hard">Nehéz</option>
-              <option value="very-hard">Kurva nehéz</option>
-            </select>
+            <button
+                className="bg-white text-black font-semibold py-3 px-4 rounded-lg"
+            >
+              Extra gomb
+            </button>
           </div>
         </div>
       </div>

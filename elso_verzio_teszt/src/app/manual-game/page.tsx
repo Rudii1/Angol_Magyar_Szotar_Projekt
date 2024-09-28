@@ -1,3 +1,4 @@
+// src/app/manual-game/page.tsx
 'use client';
 
 import React from "react";
