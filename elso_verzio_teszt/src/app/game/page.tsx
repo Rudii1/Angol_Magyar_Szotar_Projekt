@@ -29,6 +29,7 @@ const WordMatchingGame = () => {
     const [matchedPairs, setMatchedPairs] = useState<{ magyar: string; angol: string }[]>([]);
     const [incorrectPairs, setIncorrectPairs] = useState<{ magyar: string; angol: string }[]>([]);
     const [showRestartPopup, setShowRestartPopup] = useState(false);
+    const [difficultySelected, setDifficultySelected] = useState(false);
 
     const handleStartClick = () => {
         if (selectedDifficulty) {
@@ -55,6 +56,7 @@ const WordMatchingGame = () => {
         const selectedValue = event.target.value;
         const difficulty = difficultyLevels.find(level => level.value === selectedValue);
         setSelectedDifficulty(difficulty || null);
+        setDifficultySelected(!!difficulty);
     };
 
     const handleHungarianClick = (word: string) => {
@@ -111,6 +113,7 @@ const WordMatchingGame = () => {
         setIncorrectPairs([]);
         setSelectedHungarian(null);
         setSelectedEnglish(null);
+        setDifficultySelected(false);
     };
 
     return (
@@ -121,10 +124,14 @@ const WordMatchingGame = () => {
 
             {!showWords ? (
                 <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl">
+                    {!difficultySelected && (
+                        <p className="text-red-500 mb-4">Kötelezően válassz ki egy nehézségi szintet!</p>
+                    )}
                     <div className="grid grid-cols-4 gap-4">
                         <button
                             onClick={handleStartClick}
-                            className="bg-white text-black font-semibold py-3 px-4 rounded-lg"
+                            className={`bg-white text-black font-semibold py-3 px-4 rounded-lg ${!difficultySelected ? "opacity-50 cursor-not-allowed" : ""}`}
+                            disabled={!difficultySelected}
                         >
                             Start
                         </button>
@@ -222,41 +229,40 @@ const WordMatchingGame = () => {
                             )}
                         </div>
                     </div>
-                    <div className="flex justify-between mt-6">
-                        <button
-                            onClick={handleRestartClick}
-                            className="bg-yellow-400 text-black font-semibold py-3 px-4 rounded-lg"
-                        >
-                            Restart
-                        </button>
-                        <button
-                            onClick={handleBackToSelection}
-                            className="bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg"
-                        >
-                            Vissza a nehézség választásra
-                        </button>
-                    </div>
-                </div>
-            )}
+                    <button
+                        onClick={handleRestartClick}
+                        className="bg-yellow-500 text-black font-semibold py-3 px-4 rounded-lg mb-4"
+                    >
+                        Újrakezdés
+                    </button>
+                    <button
+                        onClick={handleBackToSelection}
+                        className="bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg"
+                    >
+                        Vissza a nehézségi szint kiválasztásához
+                    </button>
 
-            {/* Popup az újraindításhoz */}
-            {showRestartPopup && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white p-8 rounded-lg">
-                        <p className="mb-4">Biztosan újra akarod indítani a játékot?</p>
-                        <button
-                            onClick={confirmRestart}
-                            className="bg-green-500 text-white py-2 px-4 rounded-lg mr-4"
-                        >
-                            Igen
-                        </button>
-                        <button
-                            onClick={cancelRestart}
-                            className="bg-red-500 text-white py-2 px-4 rounded-lg"
-                        >
-                            Nem
-                        </button>
-                    </div>
+                    {showRestartPopup && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                            <div className="bg-white p-8 rounded-lg">
+                                <h2 className="text-xl mb-4">Biztosan újra akarod kezdeni?</h2>
+                                <div className="flex justify-between">
+                                    <button
+                                        onClick={confirmRestart}
+                                        className="bg-green-500 text-white py-2 px-4 rounded-lg mr-2"
+                                    >
+                                        Igen
+                                    </button>
+                                    <button
+                                        onClick={cancelRestart}
+                                        className="bg-red-500 text-white py-2 px-4 rounded-lg"
+                                    >
+                                        Nem
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
