@@ -1,0 +1,39 @@
+{
+  "very-easy": [
+    { "magyar": "alma", "angol": "apple" },
+    { "magyar": "kutya", "angol": "dog" }
+  ],
+  "easy": [
+    { "magyar": "macska", "angol": "cat" },
+    { "magyar": "asztal", "angol": "table" },
+    { "magyar": "ház", "angol": "house" }
+  ],
+  "normal": [
+    { "magyar": "autó", "angol": "car" },
+    { "magyar": "kerékpár", "angol": "bicycle" },
+    { "magyar": "víz", "angol": "water" },
+    { "magyar": "tűz", "angol": "fire" },
+    { "magyar": "szél", "angol": "wind" }
+  ],
+  "hard": [
+    { "magyar": "villám", "angol": "lightning" },
+    { "magyar": "hegy", "angol": "mountain" },
+    { "magyar": "völgy", "angol": "valley" },
+    { "magyar": "folyó", "angol": "river" },
+    { "magyar": "tó", "angol": "lake" },
+    { "magyar": "tenger", "angol": "sea" },
+    { "magyar": "óceán", "angol": "ocean" }
+  ],
+  "very-hard": [
+    { "magyar": "számítógép", "angol": "computer" },
+    { "magyar": "telefon", "angol": "phone" },
+    { "magyar": "elektronika", "angol": "electronics" },
+    { "magyar": "programozás", "angol": "programming" },
+    { "magyar": "mérnök", "angol": "engineer" },
+    { "magyar": "fizika", "angol": "physics" },
+    { "magyar": "kémia", "angol": "chemistry" },
+    { "magyar": "biológia", "angol": "biology" },
+    { "magyar": "matematika", "angol": "mathematics" },
+    { "magyar": "statisztika", "angol": "statistics" }
+  ]
+}

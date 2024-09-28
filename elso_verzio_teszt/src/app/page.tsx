@@ -7,7 +7,7 @@ const HomePage = () => {
   const router = useRouter();
 
   const handleStartClick = () => {
-    router.push("/game"); // Navigálás a játék oldalra
+    router.push("/game");
   };
 
   return (
@@ -15,7 +15,6 @@ const HomePage = () => {
         <h1 className="text-4xl font-bold text-yellow-400 mb-8 transform transition-transform duration-300 hover:scale-110">
           Angol-Magyar párosító
         </h1>
-
         <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl transition-all duration-300 ease-in-out group">
           <div className="grid grid-cols-4 gap-4">
             <button

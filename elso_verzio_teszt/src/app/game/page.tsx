@@ -1,6 +1,8 @@
-'use client'
+'use client';
 
 import React, { useState } from "react";
+import wordsData from "../../data/words.json";
+import { useRouter } from "next/navigation";
 
 interface DifficultySetting {
     label: string;
@@ -19,19 +21,77 @@ const difficultyLevels: DifficultySetting[] = [
 const WordMatchingGame = () => {
     const [showWords, setShowWords] = useState(false);
     const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultySetting | null>(null);
+    const [hungarianWords, setHungarianWords] = useState<string[]>([]);
+    const [englishWords, setEnglishWords] = useState<string[]>([]);
+    const [selectedHungarian, setSelectedHungarian] = useState<string | null>(null);
+    const [selectedEnglish, setSelectedEnglish] = useState<string | null>(null);
+    const [matchedPairs, setMatchedPairs] = useState<{ magyar: string; angol: string }[]>([]);
+    const [incorrectPairs, setIncorrectPairs] = useState<{ magyar: string; angol: string }[]>([]);
 
     const handleStartClick = () => {
-        setShowWords(true);
+        if (selectedDifficulty) {
+            const pairs = wordsData[selectedDifficulty.value];
+
+            const hungarian = pairs.map(pair => pair.magyar);
+            const english = pairs.map(pair => pair.angol);
+
+            const shuffledHungarian = hungarian.sort(() => Math.random() - 0.5);
+            const shuffledEnglish = english.sort(() => Math.random() - 0.5);
+
+            setHungarianWords(shuffledHungarian);
+            setEnglishWords(shuffledEnglish);
+            setShowWords(true);
+        }
     };
 
     const handleBackClick = () => {
         setShowWords(false);
+        setHungarianWords([]);
+        setEnglishWords([]);
+        setMatchedPairs([]);
+        setIncorrectPairs([]);
     };
 
     const handleDifficultyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = event.target.value;
         const difficulty = difficultyLevels.find(level => level.value === selectedValue);
         setSelectedDifficulty(difficulty || null);
+    };
+
+    const handleHungarianClick = (word: string) => {
+        if (selectedHungarian === word) {
+            setSelectedHungarian(null); // Ha a szó már ki van választva, akkor töröljük a választást
+        } else {
+            setSelectedHungarian(word);
+        }
+    };
+
+    const handleEnglishClick = (word: string) => {
+        if (selectedEnglish === word) {
+            setSelectedEnglish(null); // Ha a szó már ki van választva, akkor töröljük a választást
+        } else {
+            setSelectedEnglish(word);
+        }
+
+        // Párosító elenőrzés geci...
+        if (selectedHungarian && word) {
+            const pairFound = wordsData[selectedDifficulty!.value].find(
+                (pair: { magyar: string; angol: string }) =>
+                    pair.magyar === selectedHungarian && pair.angol === word
+            );
+
+            if (pairFound) {
+                // Helyes párosítás esetén
+                setMatchedPairs(prev => [...prev, pairFound]);
+            } else {
+                // Hibás párosítás esetén
+                const incorrectPair = { magyar: selectedHungarian, angol: word };
+                setIncorrectPairs(prev => [...prev, incorrectPair]);
+            }
+
+            setSelectedHungarian(null); // Választás törlése
+            setSelectedEnglish(null); // Választás törlése
+        }
     };
 
     return (
@@ -41,11 +101,11 @@ const WordMatchingGame = () => {
             </h1>
 
             {!showWords ? (
-                <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl transition-all duration-300 ease-in-out group">
+                <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl">
                     <div className="grid grid-cols-4 gap-4">
                         <button
                             onClick={handleStartClick}
-                            className="bg-white text-black font-semibold py-3 px-4 rounded-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 group-hover:scale-110"
+                            className="bg-white text-black font-semibold py-3 px-4 rounded-lg"
                         >
                             Start
                         </button>
@@ -70,20 +130,72 @@ const WordMatchingGame = () => {
                 <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl">
                     <h2 className="text-2xl text-white mb-4">{selectedDifficulty?.label}</h2>
                     <div className="grid grid-cols-2 gap-8 mb-8">
-                        {[...Array(selectedDifficulty?.wordPairs)].map((_, index) => (
-                            <React.Fragment key={index}>
-                                <div className="bg-white p-8 rounded-full text-center text-black">
-                                    Magyar szó
-                                </div>
-                                <div className="bg-white p-8 rounded-full text-center text-black">
-                                    Angol szó
-                                </div>
-                            </React.Fragment>
-                        ))}
+                        <div className="flex flex-col">
+                            {hungarianWords.map((word, index) => {
+                                const isMatched = matchedPairs.some(pair => pair.magyar === word);
+                                const isIncorrect = incorrectPairs.some(pair => pair.magyar === word);
+
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`p-8 rounded-full text-center text-black cursor-pointer 
+                                            ${isMatched ? "bg-green-400" : isIncorrect ? "bg-red-400" : "bg-white"}`}
+                                        onClick={() => handleHungarianClick(word)}
+                                        style={{ marginBottom: '10px' }} // Margin a szavak között
+                                    >
+                                        {word}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="flex flex-col">
+                            {englishWords.map((word, index) => {
+                                const isMatched = matchedPairs.some(pair => pair.angol === word);
+                                const isIncorrect = incorrectPairs.some(pair => pair.angol === word);
+
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`p-8 rounded-full text-center text-black cursor-pointer 
+                                            ${isMatched ? "bg-green-400" : isIncorrect ? "bg-red-400" : "bg-white"}`}
+                                        onClick={() => handleEnglishClick(word)}
+                                        style={{ marginBottom: '10px' }} // Margin a szavak között
+                                    >
+                                        {word}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
+
+
+                    {/* Párok külön oszlopokban */}
+                    <div className="flex justify-between mb-4 text-white">
+                        <div>
+                            {matchedPairs.length > 0 && (
+                                <div>
+                                    <h3 className="text-green-400">Helyes párok:</h3>
+                                    {matchedPairs.map((pair, index) => (
+                                        <p key={index}>{`${pair.magyar} - ${pair.angol}`}</p>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        <div>
+                            {incorrectPairs.length > 0 && (
+                                <div>
+                                    <h3 className="text-red-400">Helytelen párok:</h3>
+                                    {incorrectPairs.map((pair, index) => (
+                                        <p key={index}>{`${pair.magyar} - ${pair.angol}`}</p>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
                     <button
                         onClick={handleBackClick}
-                        className="bg-white text-black font-semibold py-3 px-4 rounded-lg"
+                        className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg"
                     >
                         Vissza
                     </button>
