@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import wordsData from "../../data/words.json";
-import { useRouter } from "next/navigation";
 
 interface DifficultySetting {
     label: string;
@@ -27,6 +26,7 @@ const WordMatchingGame = () => {
     const [selectedEnglish, setSelectedEnglish] = useState<string | null>(null);
     const [matchedPairs, setMatchedPairs] = useState<{ magyar: string; angol: string }[]>([]);
     const [incorrectPairs, setIncorrectPairs] = useState<{ magyar: string; angol: string }[]>([]);
+    const [showRestartPopup, setShowRestartPopup] = useState(false); // Új state a popup kezeléséhez
 
     const handleStartClick = () => {
         if (selectedDifficulty) {
@@ -46,10 +46,7 @@ const WordMatchingGame = () => {
 
     const handleBackClick = () => {
         setShowWords(false);
-        setHungarianWords([]);
-        setEnglishWords([]);
-        setMatchedPairs([]);
-        setIncorrectPairs([]);
+        resetGame();
     };
 
     const handleDifficultyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -73,7 +70,7 @@ const WordMatchingGame = () => {
             setSelectedEnglish(word);
         }
 
-        // Párosító elenőrzés geci...
+        // Párosító elenőrzés
         if (selectedHungarian && word) {
             const pairFound = wordsData[selectedDifficulty!.value].find(
                 (pair: { magyar: string; angol: string }) =>
@@ -92,6 +89,29 @@ const WordMatchingGame = () => {
             setSelectedHungarian(null); // Választás törlése
             setSelectedEnglish(null); // Választás törlése
         }
+    };
+
+    const handleRestartClick = () => {
+        setShowRestartPopup(true); // Popup megjelenítése
+    };
+
+    const confirmRestart = () => {
+        resetGame();
+        handleStartClick(); // Játék újraindítása
+        setShowRestartPopup(false); // Popup bezárása
+    };
+
+    const cancelRestart = () => {
+        setShowRestartPopup(false); // Popup bezárása
+    };
+
+    const resetGame = () => {
+        setHungarianWords([]);
+        setEnglishWords([]);
+        setMatchedPairs([]);
+        setIncorrectPairs([]);
+        setSelectedHungarian(null);
+        setSelectedEnglish(null);
     };
 
     return (
@@ -168,7 +188,6 @@ const WordMatchingGame = () => {
                         </div>
                     </div>
 
-
                     {/* Párok külön oszlopokban */}
                     <div className="flex justify-between mb-4 text-white">
                         <div>
@@ -193,12 +212,43 @@ const WordMatchingGame = () => {
                         </div>
                     </div>
 
-                    <button
-                        onClick={handleBackClick}
-                        className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg"
-                    >
-                        Vissza
-                    </button>
+                    <div className="flex space-x-4">
+                        <button
+                            onClick={handleRestartClick}
+                            className="bg-red-500 text-black font-semibold py-2 px-4 rounded-lg"
+                        >
+                            Restart
+                        </button>
+                        <button
+                            onClick={handleBackClick}
+                            className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg"
+                        >
+                            Vissza
+                        </button>
+                    </div>
+
+                    {/* Popup rész ez lesz , bizony ez lesz */}
+                    {showRestartPopup && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                            <div className="bg-white p-6 rounded-lg shadow-lg">
+                                <p className="text-lg font-semibold mb-4">Életem biztos újra kezded??</p>
+                                <div className="flex space-x-4">
+                                    <button
+                                        onClick={confirmRestart}
+                                        className="bg-green-500 text-white py-2 px-4 rounded-lg"
+                                    >
+                                        Igen
+                                    </button>
+                                    <button
+                                        onClick={cancelRestart}
+                                        className="bg-gray-500 text-white py-2 px-4 rounded-lg"
+                                    >
+                                        Nem
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
