@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-// A fájl elérési útja
+
 const filePath = path.join(process.cwd(), 'data', 'dictionary.json');
 
 export async function GET() {
@@ -20,7 +20,6 @@ export async function POST(request: Request) {
         const data = fs.readFileSync(filePath, 'utf8');
         const words = JSON.parse(data);
 
-        // Új szó hozzáadása
         words.push({ magyar: hungarian, angol: english });
         fs.writeFileSync(filePath, JSON.stringify(words, null, 2));
 
