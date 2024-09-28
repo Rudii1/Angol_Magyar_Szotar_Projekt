@@ -52,9 +52,9 @@ const DictionaryEditPage = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-blue-600 p-8">
             <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl text-center">
                 <h1 className="text-4xl font-bold text-yellow-400 mb-8">Szótár Módosítás</h1>
-                <p className="text-white mb-6">Itt tudod szerkeszteni ezt a csodás szótárat!</p>
+                <p className="text-white mb-6">Itt tudod szerkeszteni a szótárat!</p>
 
-                {/* Szótár táblázat megjelenítése a dolgoknak bátjya  */}
+                {/* Szótár táblázat */}
                 <div className="overflow-x-auto">
                     <table className="min-w-full bg-white text-black rounded-lg shadow-lg border border-gray-300">
                         <thead>
@@ -80,9 +80,7 @@ const DictionaryEditPage = () => {
                     </table>
                 </div>
 
-                {/* Szó hozzáadása űrlaphoz */}
-                {/*  Müködő képes dolgok*/}
-
+                {/* Szó hozzáadása űrlap */}
                 <div className="mt-6">
                     <input
                         type="text"
