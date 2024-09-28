@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import wordsData from "../../data/words.json";
 
 interface DifficultySetting {
@@ -18,6 +19,7 @@ const difficultyLevels: DifficultySetting[] = [
 ];
 
 const WordMatchingGame = () => {
+    const router = useRouter();
     const [showWords, setShowWords] = useState(false);
     const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultySetting | null>(null);
     const [hungarianWords, setHungarianWords] = useState<string[]>([]);
@@ -26,7 +28,7 @@ const WordMatchingGame = () => {
     const [selectedEnglish, setSelectedEnglish] = useState<string | null>(null);
     const [matchedPairs, setMatchedPairs] = useState<{ magyar: string; angol: string }[]>([]);
     const [incorrectPairs, setIncorrectPairs] = useState<{ magyar: string; angol: string }[]>([]);
-    const [showRestartPopup, setShowRestartPopup] = useState(false); // Új state a popup kezeléséhez
+    const [showRestartPopup, setShowRestartPopup] = useState(false);
 
     const handleStartClick = () => {
         if (selectedDifficulty) {
@@ -44,7 +46,7 @@ const WordMatchingGame = () => {
         }
     };
 
-    const handleBackClick = () => {
+    const handleBackToSelection = () => {
         setShowWords(false);
         resetGame();
     };
@@ -57,7 +59,7 @@ const WordMatchingGame = () => {
 
     const handleHungarianClick = (word: string) => {
         if (selectedHungarian === word) {
-            setSelectedHungarian(null); // Ha a szó már ki van választva, akkor töröljük a választást
+            setSelectedHungarian(null);
         } else {
             setSelectedHungarian(word);
         }
@@ -65,12 +67,11 @@ const WordMatchingGame = () => {
 
     const handleEnglishClick = (word: string) => {
         if (selectedEnglish === word) {
-            setSelectedEnglish(null); // Ha a szó már ki van választva, akkor töröljük a választást
+            setSelectedEnglish(null);
         } else {
             setSelectedEnglish(word);
         }
 
-        // Párosító elenőrzés
         if (selectedHungarian && word) {
             const pairFound = wordsData[selectedDifficulty!.value].find(
                 (pair: { magyar: string; angol: string }) =>
@@ -78,31 +79,29 @@ const WordMatchingGame = () => {
             );
 
             if (pairFound) {
-                // Helyes párosítás esetén
                 setMatchedPairs(prev => [...prev, pairFound]);
             } else {
-                // Hibás párosítás esetén
                 const incorrectPair = { magyar: selectedHungarian, angol: word };
                 setIncorrectPairs(prev => [...prev, incorrectPair]);
             }
 
-            setSelectedHungarian(null); // Választás törlése
-            setSelectedEnglish(null); // Választás törlése
+            setSelectedHungarian(null);
+            setSelectedEnglish(null);
         }
     };
 
     const handleRestartClick = () => {
-        setShowRestartPopup(true); // Popup megjelenítése
+        setShowRestartPopup(true);
     };
 
     const confirmRestart = () => {
         resetGame();
-        handleStartClick(); // Játék újraindítása
-        setShowRestartPopup(false); // Popup bezárása
+        handleStartClick();
+        setShowRestartPopup(false);
     };
 
     const cancelRestart = () => {
-        setShowRestartPopup(false); // Popup bezárása
+        setShowRestartPopup(false);
     };
 
     const resetGame = () => {
@@ -145,110 +144,119 @@ const WordMatchingGame = () => {
                             ))}
                         </select>
                     </div>
+                    <button
+                        onClick={() => router.push("/")}
+                        className="bg-red-500 text-white font-semibold py-3 px-4 rounded-lg mt-4"
+                    >
+                        Vissza a főoldalra
+                    </button>
                 </div>
             ) : (
-                <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl">
+                <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl relative">
                     <h2 className="text-2xl text-white mb-4">{selectedDifficulty?.label}</h2>
                     <div className="grid grid-cols-2 gap-8 mb-8">
                         <div className="flex flex-col">
-                            {hungarianWords.map((word, index) => {
-                                const isMatched = matchedPairs.some(pair => pair.magyar === word);
-                                const isIncorrect = incorrectPairs.some(pair => pair.magyar === word);
-
-                                return (
-                                    <div
-                                        key={index}
-                                        className={`p-8 rounded-full text-center text-black cursor-pointer 
-                                            ${isMatched ? "bg-green-400" : isIncorrect ? "bg-red-400" : "bg-white"}`}
-                                        onClick={() => handleHungarianClick(word)}
-                                        style={{ marginBottom: '10px' }} // Margin a szavak között
-                                    >
-                                        {word}
-                                    </div>
-                                );
-                            })}
+                            <h3 className="text-xl text-white mb-2">Helyes párok:</h3>
+                            {matchedPairs.length === 0 ? (
+                                <p className="text-white">Nincsenek helyes párok!</p>
+                            ) : (
+                                matchedPairs.map((pair, index) => (
+                                    <p key={index} className="bg-green-400 text-black p-4 rounded mb-4">
+                                        {`${pair.magyar} - ${pair.angol}`}
+                                    </p>
+                                ))
+                            )}
                         </div>
                         <div className="flex flex-col">
-                            {englishWords.map((word, index) => {
-                                const isMatched = matchedPairs.some(pair => pair.angol === word);
-                                const isIncorrect = incorrectPairs.some(pair => pair.angol === word);
-
+                            <h3 className="text-xl text-white mb-2">Hibás párok:</h3>
+                            {incorrectPairs.length === 0 ? (
+                                <p className="text-white">Nincsenek hibás párok!</p>
+                            ) : (
+                                incorrectPairs.map((pair, index) => (
+                                    <p key={index} className="bg-red-400 text-black p-4 rounded mb-4">
+                                        {`${pair.magyar} - ${pair.angol}`}
+                                    </p>
+                                ))
+                            )}
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-8">
+                        <div className="flex flex-col mb-8 relative">
+                            <h3 className="text-white mb-4">Magyar szavak:</h3>
+                            {hungarianWords.map((word, index) => {
+                                const isMatched = matchedPairs.some(pair => pair.magyar === word);
                                 return (
                                     <div
                                         key={index}
-                                        className={`p-8 rounded-full text-center text-black cursor-pointer 
-                                            ${isMatched ? "bg-green-400" : isIncorrect ? "bg-red-400" : "bg-white"}`}
-                                        onClick={() => handleEnglishClick(word)}
-                                        style={{ marginBottom: '10px' }} // Margin a szavak között
+                                        className={`p-6 rounded-full text-center text-black cursor-pointer 
+                                            ${isMatched ? "bg-green-400" : incorrectPairs.some(pair => pair.magyar === word) ? "bg-red-400" : "bg-white"} 
+                                            transition duration-200 ease-in-out transform hover:scale-105 mb-4`}
+                                        onClick={() => handleHungarianClick(word)}
                                     >
                                         {word}
                                     </div>
                                 );
                             })}
-                        </div>
-                    </div>
-
-                    {/* Párok külön oszlopokban */}
-                    <div className="flex justify-between mb-4 text-white">
-                        <div>
-                            {matchedPairs.length > 0 && (
-                                <div>
-                                    <h3 className="text-green-400">Helyes párok:</h3>
-                                    {matchedPairs.map((pair, index) => (
-                                        <p key={index}>{`${pair.magyar} - ${pair.angol}`}</p>
-                                    ))}
-                                </div>
+                            {selectedHungarian && selectedEnglish && (
+                                <div className="absolute bg-blue-400 w-1" style={{ height: '100%', top: '50%', transform: 'translateY(-50%)' }} />
                             )}
                         </div>
-                        <div>
-                            {incorrectPairs.length > 0 && (
-                                <div>
-                                    <h3 className="text-red-400">Helytelen párok:</h3>
-                                    {incorrectPairs.map((pair, index) => (
-                                        <p key={index}>{`${pair.magyar} - ${pair.angol}`}</p>
-                                    ))}
-                                </div>
+                        <div className="flex flex-col mb-8 relative">
+                            <h3 className="text-white mb-4">Angol szavak:</h3>
+                            {englishWords.map((word, index) => {
+                                const isMatched = matchedPairs.some(pair => pair.angol === word);
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`p-6 rounded-full text-center text-black cursor-pointer 
+                                            ${isMatched ? "bg-green-400" : incorrectPairs.some(pair => pair.angol === word) ? "bg-red-400" : "bg-white"} 
+                                            transition duration-200 ease-in-out transform hover:scale-105 mb-4`}
+                                        onClick={() => handleEnglishClick(word)}
+                                    >
+                                        {word}
+                                    </div>
+                                );
+                            })}
+                            {selectedHungarian && selectedEnglish && (
+                                <div className="absolute bg-blue-400 w-1" style={{ height: '100%', top: '50%', transform: 'translateY(-50%)' }} />
                             )}
                         </div>
                     </div>
-
-                    <div className="flex space-x-4">
+                    <div className="flex justify-between mt-6">
                         <button
                             onClick={handleRestartClick}
-                            className="bg-red-500 text-black font-semibold py-2 px-4 rounded-lg"
+                            className="bg-yellow-400 text-black font-semibold py-3 px-4 rounded-lg"
                         >
                             Restart
                         </button>
                         <button
-                            onClick={handleBackClick}
-                            className="bg-yellow-500 text-black font-semibold py-2 px-4 rounded-lg"
+                            onClick={handleBackToSelection}
+                            className="bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg"
                         >
-                            Vissza
+                            Vissza a nehézség választásra
                         </button>
                     </div>
+                </div>
+            )}
 
-                    {/* Popup megjelenítése */}
-                    {showRestartPopup && (
-                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                            <div className="bg-white p-6 rounded-lg shadow-lg">
-                                <p className="text-lg font-semibold mb-4">Biztos újra akarod kezdeni a játékot?</p>
-                                <div className="flex space-x-4">
-                                    <button
-                                        onClick={confirmRestart}
-                                        className="bg-green-500 text-white py-2 px-4 rounded-lg"
-                                    >
-                                        Igen
-                                    </button>
-                                    <button
-                                        onClick={cancelRestart}
-                                        className="bg-gray-500 text-white py-2 px-4 rounded-lg"
-                                    >
-                                        Nem
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+            {/* Popup az újraindításhoz */}
+            {showRestartPopup && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white p-8 rounded-lg">
+                        <p className="mb-4">Biztosan újra akarod indítani a játékot?</p>
+                        <button
+                            onClick={confirmRestart}
+                            className="bg-green-500 text-white py-2 px-4 rounded-lg mr-4"
+                        >
+                            Igen
+                        </button>
+                        <button
+                            onClick={cancelRestart}
+                            className="bg-red-500 text-white py-2 px-4 rounded-lg"
+                        >
+                            Nem
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
