@@ -103,7 +103,7 @@ const WordMatchingGame = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-blue-600 p-8">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-pink-800 p-8"> {/* Changed from bg-blue-600 to bg-green-600 */}
             <h1 className="text-4xl font-bold text-yellow-400 mb-8">
                 Angol-Magyar párosító
             </h1>

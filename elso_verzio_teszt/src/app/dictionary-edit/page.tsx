@@ -7,7 +7,7 @@ const DictionaryEditPage = () => {
     const router = useRouter();
     const [hungarianWord, setHungarianWord] = useState("");
     const [englishWord, setEnglishWord] = useState("");
-    const [words, setWords] = useState<any[]>([]); // any[] helyett specifikus típust is használhatsz
+    const [words, setWords] = useState<any[]>([]);
 
     // Szavak betöltése az API-ból a komponens betöltésekor
     useEffect(() => {
@@ -21,7 +21,7 @@ const DictionaryEditPage = () => {
     }, []);
 
     const handleBackToHome = () => {
-        router.push("/"); // Vissza a főoldalra navigál
+        router.push("/");
     };
 
     const handleAddWord = async () => {
@@ -48,15 +48,13 @@ const DictionaryEditPage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-blue-600 p-8">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-yellow-300 p-8"> {/* Színes átmenet */}
             <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl text-center">
                 <h1 className="text-4xl font-bold text-yellow-400 mb-8">Szótár Módosítás</h1>
 
-
                 <p className="text-lg font-semibold text-yellow-300 mb-6 bg-gray-700 p-4 rounded-lg shadow-lg">
-                    Itt tudsz manuálisan saját magadnak egy szótárat létrehozni. Ha lementesz egy szópárt,  akkor egy másik menüpontban fogsz tudni saját magadnak egy játékot létrehozni.
+                    Itt tudsz manuálisan saját magadnak egy szótárat létrehozni. Ha lementesz egy szópárt, akkor egy másik menüpontban fogsz tudni saját magadnak egy játékot létrehozni.
                 </p>
-
 
                 <div className="overflow-x-auto">
                     <table className="min-w-full bg-white text-black rounded-lg shadow-lg border border-gray-300">
@@ -83,21 +81,20 @@ const DictionaryEditPage = () => {
                     </table>
                 </div>
 
-                {/* Itt adunk bátyám hozzá egy szót */}
                 <div className="mt-6">
                     <input
                         type="text"
                         value={hungarianWord}
                         onChange={(e) => setHungarianWord(e.target.value)}
                         placeholder="Magyar szó"
-                        className="border rounded-lg p-2 mr-2 text-black" // Fekete szöveg
+                        className="border rounded-lg p-2 mr-2 text-black"
                     />
                     <input
                         type="text"
                         value={englishWord}
                         onChange={(e) => setEnglishWord(e.target.value)}
                         placeholder="Angol szó"
-                        className="border rounded-lg p-2 mr-2 text-black" // Fekete szöveg
+                        className="border rounded-lg p-2 mr-2 text-black"
                     />
                     <button
                         onClick={handleAddWord}
@@ -106,7 +103,6 @@ const DictionaryEditPage = () => {
                         Hozzáadás
                     </button>
                 </div>
-
 
                 <div className="flex justify-between mt-8">
                     <button

@@ -16,8 +16,8 @@ const ManualGamePage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-blue-600 p-8">
-            <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl text-center">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-transparent p-8">
+            <div className="bg-brown-800 p-10 rounded-lg shadow-lg w-full max-w-3xl text-center">
                 <h1 className="text-4xl font-bold text-yellow-400 mb-8">Manuális játék</h1>
                 <div className="grid grid-cols-2 gap-4">
                     <button

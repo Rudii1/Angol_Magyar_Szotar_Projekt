@@ -117,13 +117,18 @@ const WordMatchingGame = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-blue-600 p-8">
-            <h1 className="text-4xl font-bold text-yellow-400 mb-8 transform transition-transform duration-300 hover:scale-110">
+        <div className="relative flex flex-col items-center justify-center min-h-screen p-8">
+            {/* Sárga-zöld színátmenet háttér */}
+            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-green-400 opacity-90"/>
+            <h1 className="text-5xl font-bold text-white mb-8 relative z-10 transform transition-transform duration-300 hover:scale-110">
                 Angol-Magyar párosító
             </h1>
 
             {!showWords ? (
-                <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl">
+                <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl z-10">
+                    <p className="text-lg font-semibold text-yellow-300 mb-6 bg-gray-700 p-4 rounded-lg shadow-lg">
+                        Itt ki kell választani egy nehézségi szintet. Ez alapján lesz generálva egy szó összekötő játék. Majd lesz esélyed bármikor újra kezdeni illetve változtatni a nehézségi szinten később is.
+                    </p>
                     {!difficultySelected && (
                         <p className="text-red-500 mb-4">Kötelezően válassz ki egy nehézségi szintet!</p>
                     )}
@@ -159,7 +164,7 @@ const WordMatchingGame = () => {
                     </button>
                 </div>
             ) : (
-                <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl relative">
+                <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl relative z-10">
                     <h2 className="text-2xl text-white mb-4">{selectedDifficulty?.label}</h2>
                     <div className="grid grid-cols-2 gap-8 mb-8">
                         <div className="flex flex-col">
@@ -205,7 +210,8 @@ const WordMatchingGame = () => {
                                 );
                             })}
                             {selectedHungarian && selectedEnglish && (
-                                <div className="absolute bg-blue-400 w-1" style={{ height: '100%', top: '50%', transform: 'translateY(-50%)' }} />
+                                <div className="absolute bg-blue-400 w-1"
+                                     style={{height: '100%', top: '50%', transform: 'translateY(-50%)'}}/>
                             )}
                         </div>
                         <div className="flex flex-col mb-8 relative">
@@ -225,7 +231,8 @@ const WordMatchingGame = () => {
                                 );
                             })}
                             {selectedHungarian && selectedEnglish && (
-                                <div className="absolute bg-blue-400 w-1" style={{ height: '100%', top: '50%', transform: 'translateY(-50%)' }} />
+                                <div className="absolute bg-blue-400 w-1"
+                                     style={{height: '100%', top: '50%', transform: 'translateY(-50%)'}}/>
                             )}
                         </div>
                     </div>
@@ -243,7 +250,7 @@ const WordMatchingGame = () => {
                     </button>
 
                     {showRestartPopup && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                             <div className="bg-white p-8 rounded-lg">
                                 <h2 className="text-xl mb-4">Biztosan újra akarod kezdeni?</h2>
                                 <div className="flex justify-between">
