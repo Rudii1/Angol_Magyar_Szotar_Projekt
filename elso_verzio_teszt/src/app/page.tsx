@@ -7,7 +7,15 @@ const HomePage = () => {
   const router = useRouter();
 
   const handleStartClick = () => {
-    router.push("/game");
+    router.push("/game"); // Azonnal a játék oldalra visz
+  };
+
+  const handleManualClick = () => {
+    router.push("/manual-game"); // Manuális játékra visz
+  };
+
+  const handleDictionaryClick = () => {
+    router.push("/dictionary-edit"); // Szótár oldalra visz
   };
 
   return (
@@ -15,18 +23,24 @@ const HomePage = () => {
         <h1 className="text-4xl font-bold text-yellow-400 mb-8 transform transition-transform duration-300 hover:scale-110">
           Angol-Magyar párosító
         </h1>
-        <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl transition-all duration-300 ease-in-out group">
+        <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full max-w-3xl transition-all duration-300 ease-in-out">
           <div className="grid grid-cols-4 gap-4">
             <button
                 onClick={handleStartClick}
-                className="bg-white text-black font-semibold py-3 px-4 rounded-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 group-hover:scale-110"
+                className="bg-white text-black font-semibold py-3 px-4 rounded-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-110"
             >
               Start
             </button>
-            <button className="bg-white text-black font-semibold py-3 px-4 rounded-lg">
-              Extra Gomb
+            <button
+                onClick={handleManualClick}
+                className="bg-white text-black font-semibold py-3 px-4 rounded-lg"
+            >
+              Manuális játék
             </button>
-            <button className="bg-white text-black font-semibold py-3 px-4 rounded-lg">
+            <button
+                onClick={handleDictionaryClick}
+                className="bg-white text-black font-semibold py-3 px-4 rounded-lg"
+            >
               Szótár
             </button>
             <select className="bg-white text-black font-semibold py-3 px-4 rounded-lg">
