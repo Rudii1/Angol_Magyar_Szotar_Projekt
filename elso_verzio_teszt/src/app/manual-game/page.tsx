@@ -1,4 +1,3 @@
-// src/app/manual-game/page.tsx
 'use client';
 
 import React from "react";
@@ -13,6 +12,10 @@ const ManualGamePage = () => {
 
     const handleDictionaryClick = () => {
         router.push("/dictionary-edit");
+    };
+
+    const handleBackClick = () => {
+        router.push("/"); // Navigálás a főoldalra
     };
 
     return (
@@ -31,6 +34,15 @@ const ManualGamePage = () => {
                         className="bg-white text-black font-semibold py-3 px-4 rounded-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-110"
                     >
                         Szótár Módosítás
+                    </button>
+                </div>
+                {/* Vissza a főoldalra gomb */}
+                <div className="mt-8">
+                    <button
+                        onClick={handleBackClick}
+                        className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 hover:bg-blue-600 hover:scale-110"
+                    >
+                        Vissza a főoldalra
                     </button>
                 </div>
             </div>

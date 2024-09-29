@@ -9,6 +9,7 @@ const OtleteljPage = () => {
     const [showDisclaimer, setShowDisclaimer] = useState(false);
     const router = useRouter();
 
+    // Ötletek betöltése az API-ból
     useEffect(() => {
         const fetchIdeas = async () => {
             const response = await fetch('/api/otletek');
@@ -19,6 +20,7 @@ const OtleteljPage = () => {
         fetchIdeas();
     }, []);
 
+    // Új ötlet hozzáadása
     const handleAddIdea = async () => {
         if (newIdea) {
             const response = await fetch('/api/otletek', {
@@ -41,10 +43,12 @@ const OtleteljPage = () => {
         }
     };
 
+    // Vissza a főoldalra
     const handleBackToHome = () => {
         router.push('/');
     };
 
+    // Disclaimer megjelenítése/elrejtése
     const toggleDisclaimer = () => {
         setShowDisclaimer(!showDisclaimer);
     };
@@ -66,14 +70,14 @@ const OtleteljPage = () => {
                         onClick={handleAddIdea}
                         className="bg-green-500 text-white font-semibold py-3 px-4 rounded-lg mt-4 transition-transform duration-200 hover:bg-green-600 hover:scale-105"
                     >
-                        Ötlet hozzáadása a cucchoz
+                        Ötlet hozzáadása
                     </button>
                 </div>
 
                 <div className="bg-gray-100 text-gray-800 p-4 rounded-lg shadow-lg w-full">
                     <h2 className="text-3xl font-bold mb-4">Ötletek:</h2>
                     {ideas.length === 0 ? (
-                        <p className="text-gray-600">Nincsenek ötletek. Elfogytak</p>
+                        <p className="text-gray-600">Nincsenek ötletek.</p>
                     ) : (
                         <ul className="space-y-2">
                             {ideas.map((idea, index) => (
@@ -85,6 +89,7 @@ const OtleteljPage = () => {
                     )}
                 </div>
 
+                {/* Vissza gomb és felkiáltójel gomb */}
                 <div className="flex justify-between mt-8 w-full">
                     <button
                         onClick={handleBackToHome}
@@ -97,10 +102,11 @@ const OtleteljPage = () => {
                         onClick={toggleDisclaimer}
                         className="bg-yellow-500 text-black font-semibold py-3 px-6 rounded-lg transition-transform duration-300 hover:bg-yellow-600 hover:scale-105"
                     >
-                        &#33;
+                        &#33; {/* Felkiáltó jel */}
                     </button>
                 </div>
 
+                {/* Disclaimer */}
                 {showDisclaimer && (
                     <div className="mt-6 bg-yellow-200 text-black p-4 rounded-lg shadow-lg transition-opacity duration-500">
                         <p className="font-bold">

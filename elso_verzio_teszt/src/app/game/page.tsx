@@ -257,7 +257,8 @@ const WordMatchingGame = () => {
                                     <button
                                         onClick={confirmRestart}
                                         className="bg-green-500 text-white py-2 px-4 rounded-lg mr-2"
-                                    >
+                                    >ss
+                                        ss
                                         Igen
                                     </button>
                                     <button
