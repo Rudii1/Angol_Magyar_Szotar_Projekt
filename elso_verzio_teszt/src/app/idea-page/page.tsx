@@ -9,7 +9,6 @@ const OtleteljPage = () => {
     const [showDisclaimer, setShowDisclaimer] = useState(false);
     const router = useRouter();
 
-    // Ötletek betöltése az API-ból
     useEffect(() => {
         const fetchIdeas = async () => {
             const response = await fetch('/api/otletek');
@@ -20,7 +19,6 @@ const OtleteljPage = () => {
         fetchIdeas();
     }, []);
 
-    // Új ötlet hozzáadása
     const handleAddIdea = async () => {
         if (newIdea) {
             const response = await fetch('/api/otletek', {
@@ -43,12 +41,10 @@ const OtleteljPage = () => {
         }
     };
 
-    // Vissza a főoldalra
     const handleBackToHome = () => {
         router.push('/');
     };
 
-    // Disclaimer megjelenítése/elrejtése
     const toggleDisclaimer = () => {
         setShowDisclaimer(!showDisclaimer);
     };
@@ -89,7 +85,6 @@ const OtleteljPage = () => {
                     )}
                 </div>
 
-                {/* Vissza gomb és felkiáltójel gomb */}
                 <div className="flex justify-between mt-8 w-full">
                     <button
                         onClick={handleBackToHome}
@@ -102,11 +97,10 @@ const OtleteljPage = () => {
                         onClick={toggleDisclaimer}
                         className="bg-yellow-500 text-black font-semibold py-3 px-6 rounded-lg transition-transform duration-300 hover:bg-yellow-600 hover:scale-105"
                     >
-                        &#33; {/* Felkiáltó jel */}
+                        &#33;
                     </button>
                 </div>
 
-                {/* Disclaimer */}
                 {showDisclaimer && (
                     <div className="mt-6 bg-yellow-200 text-black p-4 rounded-lg shadow-lg transition-opacity duration-500">
                         <p className="font-bold">

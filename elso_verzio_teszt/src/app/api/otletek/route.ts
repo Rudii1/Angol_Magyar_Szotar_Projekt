@@ -2,10 +2,9 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-// Fájl elérési útja az ötletek mentéséhez
 const filePath = path.join(process.cwd(), 'data', 'otletek.json');
 
-// GET kérés - Ötletek lekérése
+// get
 export async function GET() {
     try {
         const data = fs.readFileSync(filePath, 'utf8');
@@ -15,14 +14,13 @@ export async function GET() {
     }
 }
 
-// POST kérés - Új ötlet hozzáadása
+//post
 export async function POST(request: Request) {
     try {
         const { newIdea } = await request.json();
         const data = fs.readFileSync(filePath, 'utf8');
         const ideas = JSON.parse(data);
-
-        // Új ötlet hozzáadása
+        //hozzáadás
         ideas.push({ idea: newIdea });
         fs.writeFileSync(filePath, JSON.stringify(ideas, null, 2));
 

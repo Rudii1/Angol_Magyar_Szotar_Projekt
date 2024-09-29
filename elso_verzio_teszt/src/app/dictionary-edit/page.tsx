@@ -9,7 +9,6 @@ const DictionaryEditPage = () => {
     const [englishWord, setEnglishWord] = useState("");
     const [words, setWords] = useState<any[]>([]);
 
-    // Szavak betöltése az API-ból a komponens betöltésekor
     useEffect(() => {
         const fetchWords = async () => {
             const response = await fetch('/api/dictionary');

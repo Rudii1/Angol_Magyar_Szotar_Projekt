@@ -118,7 +118,6 @@ const WordMatchingGame = () => {
 
     return (
         <div className="relative flex flex-col items-center justify-center min-h-screen p-8">
-            {/* Sárga-zöld színátmenet háttér */}
             <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-green-400 opacity-90"/>
             <h1 className="text-5xl font-bold text-white mb-8 relative z-10 transform transition-transform duration-300 hover:scale-110">
                 Angol-Magyar párosító

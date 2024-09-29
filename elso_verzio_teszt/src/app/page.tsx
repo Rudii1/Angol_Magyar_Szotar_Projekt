@@ -19,12 +19,11 @@ const HomePage = () => {
   };
 
   const handleOtleteljClick = () => {
-    router.push("/idea-page"); // Itt az új útvonal
+    router.push("/idea-page");
   };
 
   return (
       <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#1E3A8A] via-[#9333EA] to-[#F472B6] p-8 overflow-hidden">
-        {/* Animált háttér elemek */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
           <div className="absolute bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 opacity-60 w-96 h-96 rounded-full blur-3xl animate-blob top-10 left-10"></div>
           <div className="absolute bg-gradient-to-r from-yellow-400 via-green-400 to-blue-400 opacity-60 w-80 h-80 rounded-full blur-3xl animate-blob animation-delay-2000 bottom-10 right-10"></div>
@@ -34,7 +33,6 @@ const HomePage = () => {
           Angol-Magyar Párosító
         </h1>
 
-        {/* Gombok interaktív hatásokkal */}
         <div className="bg-gray-900 bg-opacity-80 p-12 rounded-lg shadow-2xl w-full max-w-3xl transition-all duration-500 ease-in-out z-10 backdrop-blur-lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <button
@@ -64,7 +62,6 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* Lábjegyzet animációval */}
         <footer className="mt-20 text-white text-center z-10 animate-fade-in">
           <p className="mb-2 text-lg">© 2024 Angol-Magyar Játék. Minden jog fenntartva.</p>
           <p className="mb-2 text-lg">A komoly csávók azért oda verték ezt a projektet</p>

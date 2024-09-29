@@ -15,7 +15,7 @@ const ManualGamePage = () => {
     };
 
     const handleBackClick = () => {
-        router.push("/"); // Navigálás a főoldalra
+        router.push("/");
     };
 
     return (
@@ -36,7 +36,6 @@ const ManualGamePage = () => {
                         Szótár Módosítás
                     </button>
                 </div>
-                {/* Vissza a főoldalra gomb */}
                 <div className="mt-8">
                     <button
                         onClick={handleBackClick}
