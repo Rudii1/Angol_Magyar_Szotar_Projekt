@@ -1,4 +1,3 @@
-// src/app/page.tsx
 'use client';
 
 import React from "react";
@@ -19,9 +18,12 @@ const HomePage = () => {
     router.push("/dictionary-edit");
   };
 
+  const handleOtleteljClick = () => {
+    router.push("/idea-page"); // Itt az új útvonal
+  };
+
   return (
       <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 via-purple-600 to-red-500 p-8 overflow-hidden">
-        {/* Extrém háttér animáció */}
         <div className="absolute inset-0 bg-cover bg-center opacity-50 animate-pulse" style={{ backgroundImage: "url('https://source.unsplash.com/1600x900/?neon,lights,abstract')" }} />
         <h1 className="text-6xl font-extrabold text-white mb-8 transform transition-transform duration-300 hover:scale-110 text-shadow">
           Angol-Magyar párosító
@@ -47,9 +49,10 @@ const HomePage = () => {
               Szótár
             </button>
             <button
+                onClick={handleOtleteljClick}  // Az új funkció gombja
                 className="bg-red-400 text-black font-semibold py-3 px-6 rounded-lg shadow-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-110 hover:shadow-xl"
             >
-              Extra gomb
+              Ötletelj
             </button>
           </div>
         </div>
