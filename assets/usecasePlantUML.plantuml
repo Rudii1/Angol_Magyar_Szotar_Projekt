@@ -1,0 +1,50 @@
+@startuml
+actor Felhasználó
+
+rectangle "Főoldal" {
+    Felhasználó --> (START)
+    Felhasználó --> (Szótár)
+    Felhasználó --> (Manuális játék)
+    Felhasználó --> (Ötletelj)
+}
+
+rectangle "Játék indítása" {
+    (Start)
+    (Extra gomb 1)
+    (Extra gomb 2)
+    (Vissza a főoldalra 1) -up-> (Főoldal)
+    (Válassz nehézségi szintet) --> (Nehézségi szint kiválasztása) : Nagyon könnyűtől - Kurva nehézig
+    (Nehézségi szint kiválasztása) --> (Start 1)
+
+}
+
+(START) -down-> (Válassz nehézségi szintet)
+
+(Szótár) -down-> (Szótár módositása)
+
+(Manuális játék) -down-> (Manuális Játék indítása)
+
+(Ötletelj) -down-> (Ötlet hozzáadása)
+
+rectangle "Szótár módositása" {
+    (Magyar szó megadása) -down-> (Szó hozzáadása)
+    (Angol szó megadása) -down-> (Szó hozzáadása)
+    (Vissza a főoldalra 2) -up-> (Főoldal)
+}
+
+rectangle "Manuális Játék indítása" {
+    (Játék gomb) -down-> (Saját játék létrehozzása menüpont)
+    (Saját játék létrehozzása menüpont) -down-> (Szópár csúszka)
+    (Saját játék létrehozzása menüpont) -down-> (Vissza a főoldalra 3)
+    (Vissza a főoldalra 3) -up-> (Főoldal)   
+    (Szópár csúszka) -down-> (Start 2) : Kiválasztunk szópár mennyiséget 2-től 10-ig és indulhat a játék
+    (Szótár módositása 1) -left-> (Szótár módositása)
+    (Vissza a főoldalra 4) -up-> (Főoldal)
+}
+
+rectangle "Ötlet hozzáadása" {
+    (Ötlet megadása mező) -down-> (Ötlet hozzáadása gomb)
+    (!) -down-> (Rövid leírás)
+    (Vissza a főoldalra 5) -up-> (Főoldal)
+}
+@enduml
