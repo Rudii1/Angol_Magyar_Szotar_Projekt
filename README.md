@@ -1,4 +1,4 @@
-# CSK4
+# CSK1
 - Balog Sebastian
 - Fekete Rudolf
 - Szabó Rudolf
